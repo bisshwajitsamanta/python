@@ -3,7 +3,6 @@
 
 import subprocess
 from configparser import ConfigParser
-import paramiko
 
 
 def readParser():
@@ -21,15 +20,23 @@ def readParser():
 def disable_balancer():
 
     data = readParser()
-    # Command entered s
-    cmd = 'mongo --ssl --sslAllowInvalidCertificates --port port -u admin -p --authenticationDatabase username'
+    #cmd_mongo = 'mongo --ssl --sslAllowInvalidCertificates --port port -u admin -p --authenticationDatabase username'
+    cmd_mongo='systemctl status service'
+
     for key in data:
-        if key in cmd:
-            cmd = cmd.replace(key, data[key])
-    print "cmd:: ", cmd
+        if key in cmd_mongo:
+            cmd_mongo = cmd_mongo.replace(key, data[key])
+    print "cmd:: ", cmd_mongo
+
+    filename = "Mongodb_upgrade.txt"
+    f = open(filename, 'w')
+
+    subprocess.call(cmd_mongo,shell=True, stdout=f)
 
 
 disable_balancer()
+
+
 
 
 
