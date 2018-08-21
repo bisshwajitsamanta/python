@@ -2,6 +2,7 @@
 ## Upgrade of Mongodb From 3.2 to 3.4 Version
 
 import subprocess
+import logging
 from configparser import ConfigParser
 
 
@@ -17,11 +18,11 @@ def readParser():
         data_dict.update({i: config.get("main", i)})
     return data_dict
 
+
 def disable_balancer():
 
     data = readParser()
-    #cmd_mongo = 'mongo --ssl --sslAllowInvalidCertificates --port port -u admin -p --authenticationDatabase username'
-    cmd_mongo='systemctl status service'
+    cmd_mongo = 'mongo --ssl --sslAllowInvalidCertificates --port port -u admin -p password --authenticationDatabase username'
 
     for key in data:
         if key in cmd_mongo:
@@ -31,14 +32,15 @@ def disable_balancer():
     filename = "Mongodb_upgrade.txt"
     f = open(filename, 'w')
 
-    subprocess.call(cmd_mongo,shell=True, stdout=f)
+    try:
+
+        subprocess.call('date', shell=True, stdout=f)
+        subprocess.call("echo ============================", shell=True, stdout=f)
+        subprocess.call(cmd_mongo,shell=True, stdout=f)
+
+    except Exception as e:
+        print ("Error Encountered") + str(e.args)
 
 
 disable_balancer()
-
-
-
-
-
-
 
