@@ -21,6 +21,7 @@ def readParser():
 def disable_balancer():
 
     data = readParser()
+    # Command
     cmd = 'mongo --ssl --sslAllowInvalidCertificates --port port -u admin -p --authenticationDatabase username'
     for key in data:
         if key in cmd:
