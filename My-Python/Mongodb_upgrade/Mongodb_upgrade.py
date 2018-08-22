@@ -33,7 +33,7 @@ def disable_balancer():
     f = open(filename, 'w')
 
     try:
-
+        ## Try Block
         subprocess.call('date', shell=True, stdout=f)
         subprocess.call("echo ============================", shell=True, stdout=f)
         subprocess.call(cmd_mongo,shell=True, stdout=f)
