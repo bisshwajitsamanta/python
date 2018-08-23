@@ -37,7 +37,7 @@ def disable_balancer():
         subprocess.call('date', shell=True, stdout=f)
         subprocess.call("echo ============================", shell=True, stdout=f)
         subprocess.call(cmd_mongo,shell=True, stdout=f)
-
+        ## Except Block Added
     except Exception as e:
         print ("Error Encountered") + str(e.args)
 
