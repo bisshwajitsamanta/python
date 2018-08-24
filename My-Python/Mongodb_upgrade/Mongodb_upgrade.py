@@ -3,44 +3,48 @@
 
 import subprocess
 import logging
+import pymongo
+import json
+import logging
+import atexit
+import paramiko
 from configparser import ConfigParser
 
 
-def readParser():
+class myssh:
 
-    data_dict = {}
-    config=ConfigParser()
-    config.read("config.ini")
-    port = config.get('main','port')
-    username = config.get('main', 'username')
-    password = config.get('main','password')
-    for i in config.options('main'):
-        data_dict.update({i: config.get("main", i)})
-    return data_dict
+    def __init__(self, host, user, password, port=22):
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        client.connect(host, port=port, username=user, password=password)
+        atexit.register(client.close)
+        self.client = client
+
+    def __call__(self, command):
+        stdin, stdout, stderr = self.client.exec_command(command)
+        sshdata = stdout.readlines()
+        ssherr = stderr.readlines()
+        retval = stdout.channel.recv_exit_status()
+        return sshdata, ssherr, retval
+
+data = open('data.json')
+data_common = json.load(data)
+
+for k, v in data_common.items():
+    for k1, v1 in v.items():
+        v2= v1['commandToRun']
+
+print v2
+
+def execute_remote():
+
+    remote=myssh('192.168.124.111','sysops','alcatraz1400')
+    cmd = v2
+    out,err,ret=remote(cmd)
+    print out,err,ret
+
+execute_remote()
 
 
-def disable_balancer():
 
-    data = readParser()
-    cmd_mongo = 'mongo --ssl --sslAllowInvalidCertificates --port port -u admin -p password --authenticationDatabase username'
-
-    for key in data:
-        if key in cmd_mongo:
-            cmd_mongo = cmd_mongo.replace(key, data[key])
-    print "cmd:: ", cmd_mongo
-
-    filename = "Mongodb_upgrade.txt"
-    f = open(filename, 'w')
-
-    try:
-        ## Try Block
-        subprocess.call('date', shell=True, stdout=f)
-        subprocess.call("echo ============================", shell=True, stdout=f)
-        subprocess.call(cmd_mongo,shell=True, stdout=f)
-        ## Except Block Added
-    except Exception as e:
-        print ("Error Encountered") + str(e.args)
-
-
-disable_balancer()
 
