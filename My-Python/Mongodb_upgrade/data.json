@@ -1,0 +1,11 @@
+{
+	"test_cases": {
+		"case_1": {
+			"searchData": ["Active"],
+			"commandToRun": "systemctl status mongod",
+			"description": "Checking the Status of Mongodb",
+			"node": "192.168.124.111",
+			"skip": "False"
+		}
+	}
+}
