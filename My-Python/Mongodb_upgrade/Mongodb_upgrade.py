@@ -32,7 +32,12 @@ data = open('data.json')
 data_common = json.load(data, object_pairs_hook=OrderedDict)
 
 for k, v in data_common.items():
-        v2 = [v1['commandToRun'] for k1, v1 in v.items()]
+    v2 = [v1['commandToRun'] for k1, v1 in v.items()]
+
+for key, value in data_common.items():
+    value2 = [value1['node'] for key1, value1 in value.items()]
+    print value2
+
 
 def execute_remote():
 
@@ -42,11 +47,13 @@ def execute_remote():
 
     for i in config.options('main'):
         data_dict.update({i: config.get('main',i)})
-    print data_dict
-    remote = myssh(data_dict['host'],data_dict['user'],data_dict['password'])
-    print "Connected to the host: {}".format(data_dict['host'])
-    for cmd in v2:
-            out, err, rval = remote(cmd)
+
+    for i in value2:
+
+        remote = myssh(i,data_dict['user'],data_dict['password'])
+
+        for cmd in v2:
+            out,err,rval = remote(cmd)
             print out
 
 execute_remote()
