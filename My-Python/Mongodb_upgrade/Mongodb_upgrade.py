@@ -52,6 +52,8 @@ def execute_remote():
 
         remote = myssh(i,data_dict['user'],data_dict['password'])
 
+## Command execution
+
         for cmd in v2:
             out,err,rval = remote(cmd)
             print out
