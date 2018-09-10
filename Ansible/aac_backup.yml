@@ -27,7 +27,7 @@
       set_fact:
         msg: "{{ msg[:-1] }}"
 
-- name: "*** Running some commands in Vmware"
+- name: "*** Running some commands in Vmware ***"
   hosts: deploy 
   gather_facts: no
   become: yes
@@ -48,3 +48,51 @@
         - debug: var=shell_output.stdout
 
       when: msg == "poweredOn"
+
+- name: "*** Steps for Powered On VM's ***"
+  hosts: localhost
+
+  tasks:
+    - block:
+        - name: Poweroff the VM's
+          vmware_guest:
+            hostname: 192.168.119.129
+            username: root
+            password: Password@123
+            datacenter: vntgautvol-64.localdomain
+            name: Test
+            state: poweredoff
+            validate_certs: no
+
+      when: msg == "poweredOn"
+      
+- name: "*** Steps for Powered Off VM's ***"
+  hosts: localhost
+
+  tasks:
+
+    - block:
+        - name: Print the status of the Vm 
+          debug:
+            msg: "The Status of the Vm is :: {{ msg[:-1] }}"
+
+        - name: Poweroff
+          vmware_guest:
+            hostname: 192.168.119.129
+            username: root
+            password: Password@123
+            datacenter: vntgautvol-64.localdomain
+            name: Test
+            state: poweredon
+            validate_certs: no
+
+        - name: Print the status of the Vm
+            debug:
+              msg: "The Status of the Vm is :: {{ msg[:-1] }}"
+
+      when: msg == "poweredOff"
+
+
+
+
+    
