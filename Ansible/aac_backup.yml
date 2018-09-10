@@ -1,0 +1,50 @@
+---
+
+- name: "Collecting Vmware Guest Facts"
+  hosts: localhost
+  
+  vars:
+    msg: |
+         {{ value.instance.hw_power_status }}
+
+  tasks:
+
+    - name: Gathering Facts
+      vmware_guest_facts:
+        hostname: 192.168.119.129
+        username: root
+        password: Password@123
+        datacenter: vntgautvol-64.localdomain
+        uuid: 564d6556-765a-d5eb-dcc9-711988d1e157
+        validate_certs: no
+
+      register: value
+
+    - debug:
+        msg: "Vm_Power_status: {{ msg[:-1] }}"
+
+    - name: Make the Vars permanent
+      set_fact:
+        msg: "{{ msg[:-1] }}"
+
+- name: "*** Running some commands in Vmware"
+  hosts: deploy 
+  gather_facts: no
+  become: yes
+  become_user: root
+  
+
+  tasks:
+    - name: set the fact per host
+      set_fact:
+        msg: "{{ hostvars['localhost']['msg'] }}"
+
+    - block:
+
+        - name: Running some sample commands 
+          command: ls -lrth somefile 
+          register: shell_output
+
+        - debug: var=shell_output.stdout
+
+      when: msg == "poweredOn"
