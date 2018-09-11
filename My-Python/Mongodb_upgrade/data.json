@@ -1,11 +1,42 @@
-{
+ {
 	"test_cases": {
 		"case_1": {
 			"searchData": ["Active"],
-			"commandToRun": "systemctl status mongod",
+			"commandToRun": "echo 'show dbs;'| mongo --ssl --sslAllowInvalidCertificates --port 23757 -u admin -p password --authenticationDatabase admin",
 			"description": "Checking the Status of Mongodb",
 			"node": "192.168.124.111",
 			"skip": "False"
+		},
+		"case_2":{
+			"commandToRun": "mongo admin --quiet --ssl --sslAllowInvalidCertificates --port 23757 -u admin -p password --authenticationDatabase admin --eval 'printjson(sh.stopBalancer())'",
+			"description": "Checking the Kernel Version",
+			"node": "192.168.124.111",
+			"skip": "False"
+		},
+		"case_3":{
+			"commandToRun": "mongo admin --quiet --ssl --sslAllowInvalidCertificates --port 23757 -u admin -p password --authenticationDatabase admin --eval 'printjson(sh.getBalancerState())'",
+			"description": "Checking the Kernel Version",
+			"node": "192.168.124.111",
+			"skip": "False"
+		},
+		"case_4":{
+			"commandToRun": "systemctl stop mongod",
+			"description": "Checking the Kernel Version",
+			"node": "192.168.124.111",
+			"skip": "False"
+		},
+		"case_5": {
+			"commandToRun": "systemctl status mongod",
+			"description": "Checking the Kernel Version",
+			"node": "192.168.124.112",
+			"skip": "False"
+		},
+		"case_6": {
+			"commandToRun": "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6",
+			"description": "Checking the Kernel Version",
+			"node": "192.168.124.111",
+			"skip": "False"
 		}
+
 	}
 }
