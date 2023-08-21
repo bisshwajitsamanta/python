@@ -1,0 +1,5 @@
+print(range(10))
+print(list(range(10)))
+print(len(range(10)))
+print(len(range(2,10)))
+print(len(range(2,10,2)))
