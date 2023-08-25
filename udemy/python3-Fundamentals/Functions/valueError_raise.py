@@ -7,4 +7,4 @@ def product(*values: int) -> int:
     return prod
 
 
-print(product())
+print(product(*[1,2,3,4]))
