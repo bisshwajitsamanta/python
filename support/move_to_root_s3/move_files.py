@@ -12,9 +12,13 @@ for dir in os.listdir(root_dir):
 
 for el in dir_list:
     # List all Files
-    all_files = os.listdir(el)
+    try:
+        all_files = os.listdir(el)
+        for files in all_files:
+            src_path = os.path.join(el, files)
+            dst_path = os.path.join(root_dir, files)
+            shutil.move(src_path, dst_path)
 
-    for files in all_files:
-        src_path = os.path.join(el,files)
-        dst_path = os.path.join(root_dir,files)
-        shutil.move(src_path,dst_path)
+    except FileNotFoundError:
+        print(f'File not Found exception occurred')
+        raise FileNotFoundError
