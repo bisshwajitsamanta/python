@@ -8,4 +8,5 @@ resp = client.run_instances(ImageId ="ami-051f7e7f6c2f40dc1",
 
                      )
 for instance in resp.get('Instances'):
-    print(instance['InstanceID'])
+    print(f'New Instance Got Created :{instance.get("InstanceId")}')
+
