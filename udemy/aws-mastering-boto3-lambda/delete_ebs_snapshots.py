@@ -15,3 +15,5 @@ for snapshot in resp['Snapshots']:
             client.delete_snapshot(SnapshotId=snapshot_id)
         except Exception as ex:
             print(f'Exception occurred:{ex}')
+            print("Skipping this snapshot")
+            continue
