@@ -5,5 +5,5 @@ with open(file_name) as f:
     next(f)
     for row in f:
         row = row.strip()
-        value = row.split(',')
-        print(value)
+        date, value_str = row.split(',')
+        print(date, value_str)
