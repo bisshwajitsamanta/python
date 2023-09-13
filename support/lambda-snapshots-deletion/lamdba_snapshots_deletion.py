@@ -12,7 +12,7 @@ def delete_snapshots():
     )
     for snapshot in resp['Snapshots']:
         start_time = snapshot.get('StartTime')
-        delete_time = datetime.now(tz=timezone.utc) - timedelta(minutes=5)
+        delete_time = datetime.now(tz=timezone.utc) - timedelta(days=730)
         if delete_time > start_time:
             try:
                 snapshot_id = snapshot.get('SnapshotId')
