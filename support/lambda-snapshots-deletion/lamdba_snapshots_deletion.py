@@ -11,8 +11,7 @@ def delete_snapshots():
     )
     deletion_list = [snap.get('SnapshotId') for snap in resp['Snapshots'] if
                      datetime.now(tz=timezone.utc) - timedelta(minutes=5) > snap.get('StartTime')]
-    print(f'Deletion SnapshotIds List: {deletion_list}')
-    print(f'Deletion SnapshotIds List: {len(deletion_list)}')
+    print(f'Deletion SnapshotIds List {deletion_list} with Count of {len(deletion_list)} items ')
     return deletion_list
 
 
