@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta, timezone
 import json
 import boto3
@@ -10,7 +11,7 @@ def delete_snapshots():
         OwnerIds=['self']
     )
     deletion_list = [snap.get('SnapshotId') for snap in resp['Snapshots'] if
-                     datetime.now(tz=timezone.utc) - timedelta(minutes=5) > snap.get('StartTime')]
+                     datetime.now(tz=timezone.utc) - timedelta(days=int(os.environ['age'])) > snap.get('StartTime')]
     print(f'Deletion SnapshotIds List {deletion_list} with Count of {len(deletion_list)} items ')
     return deletion_list
 
