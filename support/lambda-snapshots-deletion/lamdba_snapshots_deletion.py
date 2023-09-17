@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import datetime, timedelta, timezone
 
 import boto3
@@ -12,7 +13,7 @@ def delete_snapshots():
     )
     for snapshot in resp['Snapshots']:
         start_time = snapshot.get('StartTime')
-        delete_time = datetime.now(tz=timezone.utc) - timedelta(days=730)
+        delete_time = datetime.now(tz=timezone.utc) - timedelta(minutes=int(os.environ['age']))
         if delete_time > start_time:
             try:
                 snapshot_id = snapshot.get('SnapshotId')
