@@ -20,7 +20,7 @@ def lambda_handler(event, context):
     snapshot_ids = delete_snapshots()
     for i in range(len(snapshot_ids)):
         print(f"Hello You {snapshot_ids[i]} are going to be deleted")
-        client.delete_snapshot(SnapshotId=snapshot_ids[i])
+        _ = client.delete_snapshot(SnapshotId=snapshot_ids[i])
     return {
         'StatusCode': 200,
         'body': json.dumps(snapshot_ids, default=str)
