@@ -2,11 +2,14 @@
     Any 2 integer in an array if equals to the target sum then put them into an array
 """
 
-"""
-    Approach:
-        1. Take the first element and keep on adding till the length of the array and see if the value is equals to 10
-            a. If the value is 10 then put it in a different array and print the result array.
-            b. If not then continue adding the 2nd element to the entire list including the first element.
+"""Approach: 1. Traverse through the list take the first num and add all numbers matching 10, similarly 2nd num and 
+all numbers to match 10 a. Take the first number in the array in one for loop as i to length of the array -1 b. Start 
+the Loop from i+1 to length of the array and store as 2nd num c. Add both the numbers to see if it matches target sum.
+        
+        Time Complexity = O(n2) [N square because we are going with 2 for loops ]
+        Space Complexity = O(n2) [N square because we are going with 2 for loops ]         
+                
+            
 """
 
 array = [3, 5, -4, 8, 11, 1, -1, 6]
