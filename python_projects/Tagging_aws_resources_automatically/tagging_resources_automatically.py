@@ -21,6 +21,7 @@ ec2_client = boto3.client("ec2")
 ec2_resource = boto3.resource("ec2")
 sns_client = boto3.client("sns")
 
+
 def send_email(instance_id):
     sts_cli = get_client('sts', profile, region)
     acc_id = sts_cli.get_caller_identity().get('Account')
@@ -29,7 +30,7 @@ def send_email(instance_id):
     mess += "    Instance Id:- {}\n\n".format(instance_id)
     mess += "Regards,\nProdOps Team"
     response = sns_cli.publish(
-        TopicArn = "arn:aws:sns:{}:{}:{}".format(runtime_region, acc_id, os.environ["Sns_Topic"]),
+        TopicArn="arn:aws:sns:{}:{}:{}".format(runtime_region, acc_id, os.environ["Sns_Topic"]),
         Message=mess
     )
     return response
