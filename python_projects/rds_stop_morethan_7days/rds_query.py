@@ -23,7 +23,6 @@ def describe_rds():
                     print(f"Stopping Instance: {db['DBInstanceIdentifier']}")
         except Exception as e:
             print(f"Cannot Stop the DB Instance:{db['DBInstanceIdentifier']} with exception: {e}")
-            print("Exception:", e)
 
 
 describe_rds()
