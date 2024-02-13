@@ -24,7 +24,3 @@ def lambda_handler(event, context):
         except Exception as e:
             print(f"Cannot Stop the DB Instance:{db['DBInstanceIdentifier']} with exception: {e}")
             print("Exception:", e)
-    return {
-        'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!')
-    }
